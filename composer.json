@@ -3,7 +3,7 @@
     "type": "library",
     "description": "Date formatter for Bahasa Indonesia",
     "keywords": ["date", "formatter", "bahasa", "indonesia"],
-    "homepage": "https://github.com/Seldaek/monolog",
+    "homepage": "https://github.com/frosya-labs/id-date-formatter",
     "license": "MIT",
     "version": "1.0.0",
     "authors": [
