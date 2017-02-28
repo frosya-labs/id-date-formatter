@@ -193,18 +193,5 @@ class IdDateFormatter {
     );
 }
 
-// Test cases
-echo IdDateFormatter::now(IdDateFormatter::SHORT)."\n";
-echo IdDateFormatter::now(IdDateFormatter::TIMESTAMP)."\n";
-echo IdDateFormatter::now(IdDateFormatter::LONG)."\n";
-echo IdDateFormatter::now(IdDateFormatter::LONG_DATE_MONTH)."\n";
-echo IdDateFormatter::now(IdDateFormatter::MONTH_YEAR)."\n";
-echo IdDateFormatter::now(IdDateFormatter::MONTH_YEAR_SHORT)."\n";
-echo IdDateFormatter::now(IdDateFormatter::MYSQL_STYLE)."\n";
-echo IdDateFormatter::now(IdDateFormatter::ORACLE_STYLE)."\n";
-echo IdDateFormatter::now(IdDateFormatter::ORACLE_STYLE_WITH_TIME)."\n";
-echo IdDateFormatter::now(IdDateFormatter::COMPLETE)."\n";
-echo IdDateFormatter::now(IdDateFormatter::COMPLETE_WITH_TIME)."\n";
-
 /* End of file IdDateFormatter.php */
 /* Location: ./src/FrosyaLabs/Lang/IdDateFormatter.php */
