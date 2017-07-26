@@ -6,8 +6,8 @@ namespace FrosyaLabs\Lang;
  * Date Utils in Bahasa Indonesia, formatting date string (ex: from database)
  * 
  * @author Nanang F. Rozi <nfrozy@gmail.com>
- * @created February  1, 2011
- * @updated February 28, 2017
+ * @created February 1, 2011
+ * @updated July    26, 2017
  */
 class IdDateFormatter {
     
@@ -22,11 +22,7 @@ class IdDateFormatter {
         if (empty($date)) {
             return false;
         }
-        else {
-            $date = strtotime(str_replace('/', '-', $date));
-            
-            return self::formatDate($date, $format);
-        }
+        return self::formatDate(strtotime(str_replace('/', '-', $date)), $format);
     }
     
     /**
@@ -51,11 +47,15 @@ class IdDateFormatter {
     }
     
     private static function formatAsOracle($date) {
-        return date("d-M-Y", $date);
+        return date("d-", $date).
+            self::getTextualShortedMonth(date("m", $date)).
+            date("-Y", $date);
     }
     
     private static function formatAsOracleWithTime($date) {
-        return date("d-M-Y H:i", $date);
+        return date("d-", $date).
+            self::getTextualShortedMonth(date("m", $date)).
+            date("-Y H:i", $date);
     }
     
     private static function formatAsMysql($date) {
@@ -63,7 +63,9 @@ class IdDateFormatter {
     }
     
     private static function formatAsFullDate($date) {
-        return date("j ", $date).self::getTextualMonth(date("m", $date)).date(" Y", $date);
+        return date("j ", $date).
+            self::getTextualMonth(date("m", $date)).
+            date(" Y", $date);
     }
     
     private static function formatAsFullDateMonth($date) {
@@ -101,38 +103,113 @@ class IdDateFormatter {
     }
     
     private static function formatAsMonthYearShort($date) {
-        return self::getTextualMonth(date("M", $date))
+        return self::getTextualShortedMonth(date("m", $date))
              . date(" Y", $date);
     }
     
     public static function getTextualMonth($month) {
         switch ($month) {
-            case 1: $month = 'Januari'; break;
-            case 2: $month = 'Februari'; break;
-            case 3: $month = 'Maret'; break;
-            case 4: $month = 'April'; break;
-            case 5: $month = 'Mei'; break;
-            case 6: $month = 'Juni'; break;
-            case 7: $month = 'Juli'; break;
-            case 8: $month = 'Agustus'; break;
-            case 9: $month = 'September'; break;
-            case 10: $month = 'Oktober'; break;
-            case 11: $month = 'November'; break;
-            case 12: $month = 'Desember'; break;
+            case 1: 
+                $month = 'Januari';
+                break;
+            case 2: 
+                $month = 'Februari'; 
+                break;
+            case 3: 
+                $month = 'Maret'; 
+                break;
+            case 4: 
+                $month = 'April'; 
+                break;
+            case 5: 
+                $month = 'Mei'; 
+                break;
+            case 6: 
+                $month = 'Juni'; 
+                break;
+            case 7: 
+                $month = 'Juli'; 
+                break;
+            case 8:
+                $month = 'Agustus'; 
+                break;
+            case 9: 
+                $month = 'September'; 
+                break;
+            case 10: 
+                $month = 'Oktober'; 
+                break;
+            case 11: 
+                $month = 'November'; 
+                break;
+            case 12: 
+                $month = 'Desember'; 
+                break;
+        }
+        
+        return $month;
+    }
+
+    public static function getTextualShortedMonth($month) {
+        switch ($month) {
+            case 1: 
+                $month = 'Jan'; 
+                break;
+            case 2: 
+                $month = 'Feb'; 
+                break;
+            case 3: 
+                $month = 'Mar'; 
+                break;
+            case 4: 
+                $month = 'Apr'; 
+                break;
+            case 5: 
+                $month = 'Mei'; 
+                break;
+            case 6: 
+                $month = 'Jun'; 
+                break;
+            case 7: 
+                $month = 'Jul'; 
+                break;
+            case 8: 
+                $month = 'Ags'; 
+                break;
+            case 9: 
+                $month = 'Sep'; 
+                break;
+            case 10: 
+                $month = 'Okt'; 
+                break;
+            case 11: 
+                $month = 'Nov'; 
+                break;
+            case 12: 
+                $month = 'Des'; 
+                break;
         }
         
         return $month;
     }
     
-    public static function getTextualDay($day) {
+    public static function getTextualDay($day, $firstDayStyle = self::DAY_STANDARD) {
         switch ($day) {
-            case 0: $day = 'Ahad'; break;
-            case 1: $day = 'Senin'; break;
-            case 2: $day = 'Selasa'; break;
-            case 3: $day = 'Rabu'; break;
-            case 4: $day = 'Kamis'; break;
-            case 5: $day = 'Jumat'; break;
-            case 6: $day = 'Sabtu'; break;
+            case 0: 
+                $day = ($firstDayStyle === self::DAY_STANDARD ? 'Minggu' : 'Ahad'); 
+                break;
+            case 1: 
+                $day = 'Senin'; break;
+            case 2: 
+                $day = 'Selasa'; break;
+            case 3: 
+                $day = 'Rabu'; break;
+            case 4: 
+                $day = 'Kamis'; break;
+            case 5: 
+                $day = 'Jumat'; break;
+            case 6: 
+                $day = 'Sabtu'; break;
         }
         
         return $day;
@@ -191,6 +268,11 @@ class IdDateFormatter {
         self::MONTH_YEAR => 'MonthYear',
         self::MONTH_YEAR_SHORT => 'MonthYearShort'
     );
+
+    // Day-style constants
+    const DAY_STANDARD = 'sj';
+    const DAY_ARABIAN = 'aj';
+
 }
 
 /* End of file IdDateFormatter.php */
