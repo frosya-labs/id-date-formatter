@@ -1,16 +1,14 @@
 <?php
-
 namespace FrosyaLabs\Lang;
 
 /**
  * Date Utils in Bahasa Indonesia, formatting date string (ex: from database)
  * 
  * @author Nanang F. Rozi <nfrozy@gmail.com>
- * @created February 1, 2011
- * @updated July    26, 2017
+ * @since  1.0.0
  */
-class IdDateFormatter {
-    
+class IdDateFormatter
+{    
     /**
      * Main date formatter method
      * 
@@ -18,7 +16,8 @@ class IdDateFormatter {
      * @param int $format
      * @return boolean|string
      */
-    public static function format($date, $format = self::ORACLE_STYLE) {
+    public static function format($date, $format = self::ORACLE_STYLE)
+    {
         if (empty($date)) {
             return false;
         }
@@ -28,11 +27,12 @@ class IdDateFormatter {
     /**
      * Date formatter method router
      *
-     * @param type $date
-     * @param type $format
+     * @param string $date
+     * @param string $format
      * @return null|string NULL when empty date string given
      */
-    private static function formatDate($date, $format) {
+    private static function formatDate($date, $format)
+    {
         if (empty($date)) {
             return null;
         }
@@ -46,154 +46,80 @@ class IdDateFormatter {
         );
     }
     
-    private static function formatAsOracle($date) {
+    private static function formatAsOracle($date)
+    {
         return date("d-", $date).
             self::getTextualShortedMonth(date("m", $date)).
             date("-Y", $date);
     }
     
-    private static function formatAsOracleWithTime($date) {
+    private static function formatAsOracleWithTime($date)
+    {
         return date("d-", $date).
             self::getTextualShortedMonth(date("m", $date)).
             date("-Y H:i", $date);
     }
     
-    private static function formatAsMysql($date) {
+    private static function formatAsMysql($date)
+    {
         return date("Y-m-d", $date);
     }
     
-    private static function formatAsFullDate($date) {
+    private static function formatAsFullDate($date)
+    {
         return date("j ", $date).
-            self::getTextualMonth(date("m", $date)).
+            MonthFormatter::toText(date("m", $date)).
             date(" Y", $date);
     }
     
-    private static function formatAsFullDateMonth($date) {
-        return date("j ", $date).self::getTextualMonth(date("m", $date));
+    private static function formatAsFullDateMonth($date)
+    {
+        return date("j ", $date).MonthFormatter::toText(date("m", $date));
     }
     
-    private static function formatAsShortDate($date) {
+    private static function formatAsShortDate($date)
+    {
         return date("d/m/Y", $date);
     }
     
-    private static function formatAsCompleteDate($date) {
+    private static function formatAsCompleteDate($date)
+    {
         return self::getTextualDay(date("w ", $date)).', '
              . date("j ", $date)
-             . self::getTextualMonth(date("m", $date))
+             . MonthFormatter::toText(date("m", $date))
              . date(" Y", $date);
     }
     
-    private static function formatAsCompleteWithTime($date) {
+    private static function formatAsCompleteWithTime($date)
+    {
         return self::getTextualDay(date("w ", $date)).', '
              . date("j ", $date)
-             . self::getTextualMonth(date("m", $date))
+             . MonthFormatter::toText(date("m", $date))
              . date(" Y ", $date)
              . 'pukul'
              . date(" H:i ", $date)
              . 'WIB';
     }
 	
-    private static function formatAsTimestamp($date) {
+    private static function formatAsTimestamp($date)
+    {
         return date("d/m/Y H:i", $date);
     }
     
-    private static function formatAsMonthYear($date) {
-        return self::getTextualMonth(date("m", $date))
+    private static function formatAsMonthYear($date)
+    {
+        return MonthFormatter::toText(date("m", $date))
              . date(" Y", $date);
     }
     
-    private static function formatAsMonthYearShort($date) {
-        return self::getTextualShortedMonth(date("m", $date))
+    private static function formatAsMonthYearShort($date)
+    {
+        return MonthFormatter::toShortedText(date("m", $date))
              . date(" Y", $date);
     }
     
-    public static function getTextualMonth($month) {
-        switch ($month) {
-            case 1: 
-                $month = 'Januari';
-                break;
-            case 2: 
-                $month = 'Februari'; 
-                break;
-            case 3: 
-                $month = 'Maret'; 
-                break;
-            case 4: 
-                $month = 'April'; 
-                break;
-            case 5: 
-                $month = 'Mei'; 
-                break;
-            case 6: 
-                $month = 'Juni'; 
-                break;
-            case 7: 
-                $month = 'Juli'; 
-                break;
-            case 8:
-                $month = 'Agustus'; 
-                break;
-            case 9: 
-                $month = 'September'; 
-                break;
-            case 10: 
-                $month = 'Oktober'; 
-                break;
-            case 11: 
-                $month = 'November'; 
-                break;
-            case 12: 
-                $month = 'Desember'; 
-                break;
-        }
-        
-        return $month;
-    }
-
-    public static function getTextualShortedMonth($month) {
-        switch ($month) {
-            case 1: 
-                $month = 'Jan'; 
-                break;
-            case 2: 
-                $month = 'Feb'; 
-                break;
-            case 3: 
-                $month = 'Mar'; 
-                break;
-            case 4: 
-                $month = 'Apr'; 
-                break;
-            case 5: 
-                $month = 'Mei'; 
-                break;
-            case 6: 
-                $month = 'Jun'; 
-                break;
-            case 7: 
-                $month = 'Jul'; 
-                break;
-            case 8: 
-                $month = 'Ags'; 
-                break;
-            case 9: 
-                $month = 'Sep'; 
-                break;
-            case 10: 
-                $month = 'Okt'; 
-                break;
-            case 11: 
-                $month = 'Nov'; 
-                break;
-            case 12: 
-                $month = 'Des'; 
-                break;
-        }
-        
-        return $month;
-    }
-    
-    public static function getTextualDay($day, $firstDayStyle = self::DAY_STANDARD) {
+    public static function getTextualDay($day, $firstDayStyle = self::DAY_STANDARD)
+    {
         switch ($day) {
             case 0: 
                 $day = ($firstDayStyle === self::DAY_STANDARD ? 'Minggu' : 'Ahad'); 
@@ -215,7 +141,8 @@ class IdDateFormatter {
         return $day;
     }
     
-    public static function addLeadingZero($str) {
+    public static function addLeadingZero($str)
+    {
         return strlen($str) == 1 ? '0'.$str : $str;
     }
     
@@ -225,7 +152,8 @@ class IdDateFormatter {
      * @param int $format
      * @return string
      */
-    public static function now($format = self::SHORT) {
+    public static function now($format = self::SHORT)
+    {
         return self::formatDate(time(), $format);
     }
     
