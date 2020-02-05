@@ -153,7 +153,7 @@ class IdDateFormatter
     }
     
     /**
-     * Get current date
+     * Get current date using SHORT Format
      * 
      * @param int $format
      * @return string
