@@ -141,6 +141,12 @@ class IdDateFormatter
         return $day;
     }
     
+    /**
+     * Add 0 prefix whenever the date number is single character long
+     * 
+     * @param string $str
+     * @return string
+     */
     public static function addLeadingZero($str)
     {
         return strlen($str) == 1 ? '0'.$str : $str;
