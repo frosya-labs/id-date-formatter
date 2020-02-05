@@ -49,14 +49,14 @@ class IdDateFormatter
     private static function formatAsOracle($date)
     {
         return date("d-", $date).
-            self::getTextualShortedMonth(date("m", $date)).
+            MonthFormatter::toShortedText(date("m", $date)).
             date("-Y", $date);
     }
     
     private static function formatAsOracleWithTime($date)
     {
         return date("d-", $date).
-            self::getTextualShortedMonth(date("m", $date)).
+            MonthFormatter::toShortedText(date("m", $date)).
             date("-Y H:i", $date);
     }
     
