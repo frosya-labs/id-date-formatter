@@ -9,7 +9,7 @@ namespace FrosyaLabs\Lang;
  */
 class MonthFormatter
 {
-    private const LONG_MONTH = [
+    const LONG_MONTH = [
         'Januari', 
         'Februari', 
         'Maret', 
@@ -24,7 +24,7 @@ class MonthFormatter
         'Desember'
     ];
     
-    private const SHORT_MONTH = [
+    const SHORT_MONTH = [
         'Jan',
         'Feb',
         'Mar',
